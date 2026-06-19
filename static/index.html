@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube → Markdown</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="main-container">
+        <div class="logo-section">
+            <h1 class="logo">YouTube<span class="logo-arrow">→</span>MD</h1>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <div class="search-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                </div>
+                <input
+                    type="text"
+                    id="url-input"
+                    placeholder="YouTube URL을 입력하세요"
+                    aria-label="YouTube URL"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+                <button id="clear-btn" class="clear-btn" hidden>&times;</button>
+            </div>
+            <div id="url-error" class="error-message" role="alert" aria-live="polite"></div>
+        </div>
+
+        <div class="button-section">
+            <button id="convert-btn" class="btn-primary" disabled>Markdown으로 변환</button>
+            <button id="options-toggle" class="btn-secondary">옵션</button>
+        </div>
+
+        <div id="options-panel" class="options-panel" hidden>
+            <div class="options-row">
+                <label class="option-item">
+                    <input type="checkbox" id="opt-timestamps" checked>
+                    <span>타임스탬프 포함</span>
+                </label>
+                <label class="option-item">
+                    <input type="checkbox" id="opt-metadata" checked>
+                    <span>메타데이터 포함</span>
+                </label>
+                <label class="option-item">
+                    <select id="opt-language">
+                        <option value="">자동 감지</option>
+                        <option value="ko">한국어</option>
+                        <option value="en">English</option>
+                        <option value="ja">日本語</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div id="progress-section" class="progress-section" hidden>
+            <div class="progress-card">
+                <div class="progress-header">
+                    <div class="progress-title">
+                        <span id="progress-icon" class="progress-icon">⏳</span>
+                        <span id="progress-label">준비 중...</span>
+                    </div>
+                    <div class="progress-meta">
+                        <span id="progress-percent">0%</span>
+                        <span id="progress-eta" class="progress-eta"></span>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                <div class="progress-steps">
+                    <div class="progress-step" id="step-url">
+                        <span class="step-dot"></span>
+                        <span class="step-text">URL 분석</span>
+                    </div>
+                    <div class="progress-step" id="step-meta">
+                        <span class="step-dot"></span>
+                        <span class="step-text">영상 정보</span>
+                    </div>
+                    <div class="progress-step" id="step-transcript">
+                        <span class="step-dot"></span>
+                        <span class="step-text">자막 추출</span>
+                    </div>
+                    <div class="progress-step" id="step-format">
+                        <span class="step-dot"></span>
+                        <span class="step-text">Markdown 변환</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="result" class="result-section" hidden>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="success-icon">✅</span>
+                    <span>변환 완료</span>
+                </div>
+                <div class="result-meta">
+                    <span id="result-title"></span>
+                    <span id="result-channel"></span>
+                    <span id="result-stats"></span>
+                </div>
+                <div class="result-actions">
+                    <button id="download-btn" class="btn-action">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        다운로드
+                    </button>
+                    <button id="copy-btn" class="btn-action">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        복사
+                    </button>
+                    <button id="new-btn" class="btn-action btn-new">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        새로 변환
+                    </button>
+                </div>
+                <details class="preview-details">
+                    <summary>미리보기</summary>
+                    <pre id="preview" class="preview-content"></pre>
+                </details>
+            </div>
+        </div>
+
+        <div id="error-result" class="error-section" hidden>
+            <div class="error-card">
+                <span class="error-icon">❌</span>
+                <span id="error-message"></span>
+                <button id="retry-btn" class="btn-secondary">다시 시도</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <span>YouTube-to-Markdown</span>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+[project]
+name = "youtube-to-md"
+version = "1.0.0"
+description = "YouTube 영상의 음성 내용을 Markdown 파일로 변환하는 웹 애플리케이션"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
