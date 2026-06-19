@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://y2md.ponslink.com/sitemap.xml

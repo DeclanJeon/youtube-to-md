@@ -1,0 +1,31 @@
+# YouTube to Markdown (Y2MD)
+
+> Convert YouTube video captions/transcripts into clean Markdown files.
+
+Y2MD is a web application at https://y2md.ponslink.com. Users paste a public YouTube URL and receive a downloadable Markdown document containing the video's transcript, optional timestamps, and video metadata.
+
+## Core capabilities
+
+- YouTube URL validation for youtube.com, youtu.be, shorts, and embed URLs.
+- Transcript extraction using youtube-transcript-api and yt-dlp fallback.
+- Automatic caption language detection.
+- Markdown formatting with title, channel, source URL, extraction date, and timestamped sections.
+- Download as .md or copy to clipboard.
+- Progress UI with URL analysis, video metadata, transcript extraction, and Markdown conversion stages.
+
+## Limitations
+
+- Works best for public YouTube videos with captions or auto-captions.
+- Videos without captions may not produce a transcript.
+- YouTube may rate-limit or block some requests, especially from data-center IPs.
+- No video or audio files are downloaded; only caption/transcript data is processed.
+
+## API
+
+POST /api/transcript
+GET /api/languages/{video_id}
+GET /api/health
+
+## Suggested citation
+
+YouTube to Markdown, Y2MD, https://y2md.ponslink.com

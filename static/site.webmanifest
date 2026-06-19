@@ -1,0 +1,23 @@
+{
+  "name": "YouTube to Markdown",
+  "short_name": "Y2MD",
+  "description": "YouTube 영상 자막을 깔끔한 Markdown 파일로 변환하는 웹앱",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#202124",
+  "theme_color": "#202124",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

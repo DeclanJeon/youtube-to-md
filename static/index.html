@@ -3,9 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube → Markdown</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <title>YouTube to Markdown | YouTube 자막을 Markdown 파일로 변환</title>
+    <meta name="description" content="YouTube URL을 입력하면 영상 자막과 트랜스크립트를 깔끔한 Markdown 파일로 변환합니다. 자동 언어 감지, 타임스탬프, 메타데이터, 다운로드를 지원합니다.">
+    <meta name="keywords" content="YouTube to Markdown, YouTube 자막 추출, 유튜브 자막 다운로드, YouTube transcript, markdown converter, 자막 마크다운 변환, 영상 요약 준비">
+    <meta name="author" content="DeclanJeon">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="application-name" content="Y2MD">
+    <meta name="theme-color" content="#202124">
+    <meta name="color-scheme" content="dark light">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="canonical" href="https://y2md.ponslink.com/">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon-180.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="YouTube to Markdown">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:url" content="https://y2md.ponslink.com/">
+    <meta property="og:title" content="YouTube to Markdown | YouTube 자막을 Markdown 파일로 변환">
+    <meta property="og:description" content="YouTube URL 하나로 자막을 추출하고 타임스탬프가 포함된 Markdown 파일을 다운로드하세요.">
+    <meta property="og:image" content="https://y2md.ponslink.com/og-image.png">
+    <meta property="og:image:secure_url" content="https://y2md.ponslink.com/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="YouTube to Markdown - YouTube transcript to clean Markdown">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="YouTube to Markdown">
+    <meta name="twitter:description" content="YouTube 영상 자막을 깔끔한 Markdown 파일로 변환합니다.">
+    <meta name="twitter:image" content="https://y2md.ponslink.com/og-image.png">
+    <meta name="twitter:image:alt" content="YouTube to Markdown social preview">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://y2md.ponslink.com/#webapp",
+          "name": "YouTube to Markdown",
+          "alternateName": ["Y2MD", "YouTube → MD"],
+          "url": "https://y2md.ponslink.com/",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Web",
+          "inLanguage": ["ko", "en"],
+          "description": "YouTube URL을 입력하면 영상 자막과 트랜스크립트를 Markdown 파일로 변환하는 웹 애플리케이션입니다.",
+          "image": "https://y2md.ponslink.com/og-image.png",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": [
+            "YouTube transcript extraction",
+            "Automatic caption language detection",
+            "Timestamped Markdown output",
+            "Markdown file download",
+            "Clipboard copy"
+          ],
+          "creator": {
+            "@type": "Person",
+            "name": "DeclanJeon",
+            "url": "https://github.com/DeclanJeon"
+          },
+          "sameAs": [
+            "https://github.com/DeclanJeon/youtube-to-md"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://y2md.ponslink.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "YouTube to Markdown은 무엇인가요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "YouTube URL을 입력하면 해당 영상의 자막 또는 트랜스크립트를 추출해 Markdown 파일로 변환하는 웹 도구입니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "YouTube API 키가 필요한가요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "기본 사용에는 필요하지 않습니다. 다만 클라우드 환경에서 안정성을 높이려면 YouTube Data API 키를 선택적으로 설정할 수 있습니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "자막이 없는 영상도 변환되나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "공개 자막 또는 자동 자막이 있는 영상에서 가장 잘 동작합니다. 자막이 전혀 없는 영상은 변환할 수 없습니다."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "HowTo",
+          "@id": "https://y2md.ponslink.com/#howto",
+          "name": "YouTube 영상을 Markdown으로 변환하는 방법",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "name": "YouTube URL 입력",
+              "text": "변환할 공개 YouTube 영상 URL을 입력창에 붙여넣습니다."
+            },
+            {
+              "@type": "HowToStep",
+              "name": "변환 실행",
+              "text": "Markdown으로 변환 버튼을 누르면 자막 추출과 Markdown 포맷팅이 진행됩니다."
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Markdown 다운로드",
+              "text": "변환 완료 후 Markdown 파일을 다운로드하거나 클립보드로 복사합니다."
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div class="main-container">
